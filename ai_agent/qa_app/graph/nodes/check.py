@@ -2,6 +2,7 @@ from typing import Any
 from pydantic import BaseModel, Field
 from langchain_core.prompts import ChatPromptTemplate
 
+from events import send_event
 from graph.state import State
 from chat_model import llm
 
@@ -24,5 +25,7 @@ def check_node(state: State) -> dict[str, Any]:
     )
     chain = prompt | llm.with_structured_output(Judgement)
     result: Judgement = chain.invoke({"query": query, "answer": answer})
+
+    send_event(result.reason)
 
     return {"current_judge": result.judge, "judgement_reason": result.reason}

@@ -1,5 +1,6 @@
 from langgraph.graph import StateGraph, END
 
+from events import send_event
 from graph.nodes.answering import answering_node
 from graph.nodes.check import check_node
 from graph.nodes.selection import selection_node
@@ -25,3 +26,9 @@ workflow.add_conditional_edges(
 )
 
 compiled = workflow.compile()
+
+
+def run_workflow(query: str):
+    initial_state = State(query=query)
+    result = compiled.invoke(initial_state)
+    send_event(result)
