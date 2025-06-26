@@ -26,6 +26,6 @@ def check_node(state: State) -> dict[str, Any]:
     chain = prompt | llm.with_structured_output(Judgement)
     result: Judgement = chain.invoke({"query": query, "answer": answer})
 
-    send_event(result.reason)
+    send_event("check_result", result.reason)
 
     return {"current_judge": result.judge, "judgement_reason": result.reason}

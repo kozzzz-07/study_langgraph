@@ -31,4 +31,4 @@ compiled = workflow.compile()
 def run_workflow(query: str):
     initial_state = State(query=query)
     result = compiled.invoke(initial_state)
-    send_event(result)
+    send_event("workflow_result", result)

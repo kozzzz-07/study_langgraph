@@ -33,7 +33,7 @@ def selection_node(state: State) -> dict[str, Any]:
     )
     role_number = chain.invoke({"role_options": role_options, "query": query})
 
-    send_event(role_number)
+    send_event("role_selection", role_number)
 
     selected_role = ROLES[role_number.strip()]["name"]
     return {"current_role": selected_role}

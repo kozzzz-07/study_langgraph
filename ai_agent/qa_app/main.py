@@ -1,4 +1,4 @@
-from flask import Flask, Response, request
+from flask import Flask, Response, jsonify, request
 from dotenv import load_dotenv
 
 from events import event_stream, send_event
@@ -21,9 +21,10 @@ def run():
     if not message:
         return "No message provided", 400
 
-    send_event("処理を開始します")
+    send_event("status", "処理を開始します")
     run_workflow(message)
-    send_event("処理を終了します")
+    send_event("status", "処理を終了します")
+    return jsonify({"status": "success", "message": "Workflow initiated."}), 200
 
 
 if __name__ == "__main__":

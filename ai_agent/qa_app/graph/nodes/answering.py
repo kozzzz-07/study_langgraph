@@ -25,6 +25,6 @@ def answering_node(state: State) -> dict[str, Any]:
     chain = prompt | llm | StrOutputParser()
     answer = chain.invoke({"role": role, "role_details": role_details, "query": query})
 
-    send_event(answer)
+    send_event("answer", answer)
 
     return {"messages": [answer]}
