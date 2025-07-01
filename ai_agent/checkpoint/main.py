@@ -37,6 +37,7 @@ def test3():
 def main():
     test1()
     test2()
+    # thread_idが違うため、文脈を理解できない
     test3()
 
 
