@@ -9,3 +9,8 @@ result = compiled.invoke(initial_state)
 
 
 print(result)
+
+# 画像化
+# https://langchain-ai.github.io/langgraph/how-tos/graph-api/#png
+# output_path = "graph.png"
+# compiled.get_graph().draw_mermaid_png(output_file_path=output_path)
