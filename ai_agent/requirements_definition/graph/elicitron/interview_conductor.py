@@ -61,7 +61,16 @@ class InterviewConductor:
             for persona in personas
         ]
         # 質問をバッチ処理で生成
-        return question_chain.batch(question_queries)
+        # return question_chain.batch(question_queries)
+
+        # NOTE: 無料枠のAPIのリクエスト制限回避のためのループ
+        questions = []
+        for query in question_queries:
+            import time
+
+            time.sleep(4)
+            questions.append(question_chain.invoke(query))
+        return questions
 
     def _generate_answers(
         self, personas: list[Persona], questions: list[str]
@@ -89,7 +98,16 @@ class InterviewConductor:
             for persona, question in zip(personas, questions)
         ]
         # 回答をバッチ処理で生成
-        return answer_chain.batch(answer_queries)
+        # return answer_chain.batch(answer_queries)
+
+        # NOTE: 無料枠のAPIのリクエスト制限回避のためのループ
+        answers = []
+        for query in answer_queries:
+            import time
+
+            time.sleep(4)
+            answers.append(answer_chain.invoke(query))
+        return answers
 
     def _create_interviews(
         self, personas: list[Persona], questions: list[str], answers: list[str]

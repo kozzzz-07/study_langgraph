@@ -32,8 +32,11 @@ def main():
 
     # モデルを初期化
     llm = ChatGoogleGenerativeAI(
-        model="gemini-2.5-flash-lite-preview-06-17", temperature=0
+        model="gemini-2.5-flash-lite-preview-06-17",
+        temperature=0,
     )
+    # llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash-lite", temperature=0)
+
     # 要件定義書生成AIエージェントを初期化
     agent = DocumentationAgent(llm=llm, k=args.k)
     # エージェントを実行して最終的な出力を取得
@@ -41,6 +44,10 @@ def main():
 
     # 最終的な出力を表示
     print(final_output)
+
+    # ファイルに出力
+    with open("output.md", "w", encoding="utf-8") as f:
+        f.write(final_output)
 
 
 if __name__ == "__main__":
