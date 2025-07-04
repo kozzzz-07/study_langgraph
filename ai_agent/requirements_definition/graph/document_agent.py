@@ -86,6 +86,10 @@ class DocumentationAgent:
         return {"requirements_doc": requirements_doc}
 
     def run(self, user_request: str) -> str:
+        # 画像化
+        # output_path = "graph.png"
+        # self.graph.get_graph().draw_mermaid_png(output_file_path=output_path)
+
         # 初期状態の設定
         initial_state = InterviewState(user_request=user_request)
         # グラフの実行
