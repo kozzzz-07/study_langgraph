@@ -5,6 +5,7 @@ from langchain_core.prompts import ChatPromptTemplate
 
 from ..data_models.evaluation import EvaluationResult
 from ..data_models.interview import Interview
+from .utils import invoke_with_retry
 
 
 class InformationEvaluator:
@@ -31,7 +32,8 @@ class InformationEvaluator:
         # 情報の十分性を評価するチェーンを作成
         chain = prompt | self.llm
         # 評価結果を返す
-        return chain.invoke(
+        return invoke_with_retry(
+            chain,
             {
                 "user_request": user_request,
                 "interview_results": "\n".join(
@@ -39,5 +41,5 @@ class InformationEvaluator:
                     f"質問: {i.question}\n回答: {i.answer}\n"
                     for i in interviews
                 ),
-            }
+            },
         )

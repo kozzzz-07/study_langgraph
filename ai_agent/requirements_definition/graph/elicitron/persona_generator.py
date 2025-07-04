@@ -3,6 +3,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
 
 from ..data_models.persona import Personas
+from .utils import invoke_with_retry
 
 
 class PersonaGenerator:
@@ -29,4 +30,4 @@ class PersonaGenerator:
         # ペルソナ生成のためのチェーンを作成
         chain = prompt | self.llm
         # ペルソナを生成
-        return chain.invoke({"user_request": user_request})
+        return invoke_with_retry(chain, {"user_request": user_request})

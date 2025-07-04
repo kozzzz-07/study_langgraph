@@ -9,6 +9,7 @@ from ..data_models.interview import (
     InterviewResult,
 )
 from ..data_models.persona import Persona
+from .utils import invoke_with_retry
 
 
 class InterviewConductor:
@@ -66,10 +67,7 @@ class InterviewConductor:
         # NOTE: 無料枠のAPIのリクエスト制限回避のためのループ
         questions = []
         for query in question_queries:
-            import time
-
-            time.sleep(4)
-            questions.append(question_chain.invoke(query))
+            questions.append(invoke_with_retry(question_chain, query))
         return questions
 
     def _generate_answers(
@@ -103,10 +101,7 @@ class InterviewConductor:
         # NOTE: 無料枠のAPIのリクエスト制限回避のためのループ
         answers = []
         for query in answer_queries:
-            import time
-
-            time.sleep(4)
-            answers.append(answer_chain.invoke(query))
+            answers.append(invoke_with_retry(answer_chain, query))
         return answers
 
     def _create_interviews(
